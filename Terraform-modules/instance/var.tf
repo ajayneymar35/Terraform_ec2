@@ -16,3 +16,7 @@ variable "volume_size" {
 variable "security_group_id" {
     type = string
 }
+
+variable "icount" {
+    type = number
+}

@@ -1,30 +1,28 @@
-module "mysecurity" {
-   source = "./security"
-   sec_name = "mysg1"
-}
+module "myinstance" {
+   source = "./instance"
+   iname = "module-server"
+   ikey = "my-key-pair"
+   ami_id = "ami-02f624c08a83ca16f"
+   itype = "t2.micro"
+   volume_size = 10
+   icount = 1
+   security_group_id = "my-own-sec"
 
-output "mysecurity" {
-  value = module.mysecurity.security_group_id
-}
-
-
-module "myec2" {
-    source = "./instance"
-    iname = "module-server"
-    ami_id = "ami-08fe5144e4659a3b3"
-    itype = "t2.micro"
-    ikey = "MY-key-pair-mumbai-hari"
-    volume_size = 15
-    security_group_id = module.mysecurity.security_group_id
-}
-
-module "mybucket1001" {
-    source = "./bucket"
-    bucket_name = "terraform-s3-bucket-hari"
 }
 
 
-   
+module "mys3" {
+   source = "./bucket"
+   bucket_name = "terraform.module.s3.bucket.ajay"
 
+}
 
+module "mysec-group" {
+    source = "./security"
+    sec_name = "terraform-module-sg"
 
+}
+
+output "mysec-group" {
+  value = module.mysec-group.security_group_id
+}
